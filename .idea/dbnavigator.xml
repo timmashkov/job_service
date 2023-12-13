@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -23,6 +23,7 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="c4f11d35-9dba-497d-81c4-18f34aa8429d" dataset="main.resume" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c4f11d35-9dba-497d-81c4-18f34aa8429d" dataset="main.worker" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
@@ -436,18 +437,18 @@
     <execution-engine-settings>
       <statement-execution>
         <fetch-block-size value="100" />
-        <execution-timeout value="20" />
-        <debug-execution-timeout value="600" />
+        <execution-timeout value="0" />
+        <debug-execution-timeout value="0" />
         <focus-result value="false" />
         <prompt-execution value="false" />
       </statement-execution>
       <script-execution>
         <command-line-interfaces />
-        <execution-timeout value="300" />
+        <execution-timeout value="0" />
       </script-execution>
       <method-execution>
-        <execution-timeout value="30" />
-        <debug-execution-timeout value="600" />
+        <execution-timeout value="0" />
+        <debug-execution-timeout value="0" />
         <parameter-history-size value="10" />
       </method-execution>
     </execution-engine-settings>

@@ -7,3 +7,7 @@ class ResumeIn(BaseModel):
     age: int
     about: str | None = None
     experience: int | None = None
+
+
+class ResumeOut(ResumeIn):
+    id: int
