@@ -20,8 +20,8 @@ async def find_resume(name: str,
         stmt = select(Resume).where(Resume.first_name == name)
         result = await session.execute(stmt)
         await session.commit()
-        answer = result.first()
-        return answer._asdict()
+        answer = result.scalars().first()
+        return answer
     except Exception as e:
         await session.rollback()
         return {"answer": f"Error {e} is catched"}
@@ -75,4 +75,14 @@ async def update_resume(resume: ResumeIn,
     except Exception as e:
         await session.rollback()
         return {"answer": f"Error {e} is catched"}
-    
+
+
+async def delete_resume(resume: Resume,
+                        session: AsyncSession):
+    try:
+        await session.delete(resume)
+        await session.commit()
+        return {"message": f" Order {resume} has been deleted"}
+    except Exception as e:
+        await session.rollback()
+        return {"answer": f"Error {e} is catched"}
