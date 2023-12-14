@@ -14,8 +14,7 @@ async def get_all_resume(session: AsyncSession):
     return {"answer": "Sorry, there are no resumes"}
 
 
-async def find_resume(name: str,
-                      session: AsyncSession):
+async def find_resume(name: str, session: AsyncSession):
     try:
         stmt = select(Resume).where(Resume.first_name == name)
         result = await session.execute(stmt)
@@ -27,22 +26,27 @@ async def find_resume(name: str,
         return {"answer": f"Error {e} is catched"}
 
 
-async def insert_resume(resume: ResumeIn,
-                        session: AsyncSession):
+async def insert_resume(resume: ResumeIn, session: AsyncSession):
     try:
-        stmt = (insert(Resume)
-                .values(first_name=resume.first_name,
-                        last_name=resume.last_name,
-                        age=resume.age,
-                        about=resume.about,
-                        experience=resume.experience)
-                .returning(Resume.id,
-                           Resume.first_name,
-                           Resume.last_name,
-                           Resume.age,
-                           Resume.about,
-                           Resume.experience,
-                           Resume.created_at))
+        stmt = (
+            insert(Resume)
+            .values(
+                first_name=resume.first_name,
+                last_name=resume.last_name,
+                age=resume.age,
+                about=resume.about,
+                experience=resume.experience,
+            )
+            .returning(
+                Resume.id,
+                Resume.first_name,
+                Resume.last_name,
+                Resume.age,
+                Resume.about,
+                Resume.experience,
+                Resume.created_at,
+            )
+        )
         result = await session.execute(stmt)
         await session.commit()
         answer = result.first()
@@ -52,22 +56,28 @@ async def insert_resume(resume: ResumeIn,
         return {"answer": f"Error {e} is catched"}
 
 
-async def update_resume(resume: ResumeIn,
-                        session: AsyncSession):
+async def update_resume(resume: ResumeIn, session: AsyncSession):
     try:
-        stmt = (update(Resume)
-                .values(first_name=resume.first_name,
-                        last_name=resume.last_name,
-                        age=resume.age, about=resume.about,
-                        experience=resume.experience)
-                .where(Resume.first_name == resume.first_name)
-                .returning(Resume.id,
-                           Resume.first_name,
-                           Resume.last_name,
-                           Resume.age,
-                           Resume.about,
-                           Resume.experience,
-                           Resume.created_at))
+        stmt = (
+            update(Resume)
+            .values(
+                first_name=resume.first_name,
+                last_name=resume.last_name,
+                age=resume.age,
+                about=resume.about,
+                experience=resume.experience,
+            )
+            .where(Resume.first_name == resume.first_name)
+            .returning(
+                Resume.id,
+                Resume.first_name,
+                Resume.last_name,
+                Resume.age,
+                Resume.about,
+                Resume.experience,
+                Resume.created_at,
+            )
+        )
         result = await session.execute(stmt)
         await session.commit()
         answer = result.first()
@@ -77,8 +87,7 @@ async def update_resume(resume: ResumeIn,
         return {"answer": f"Error {e} is catched"}
 
 
-async def delete_resume(resume: Resume,
-                        session: AsyncSession):
+async def delete_resume(resume: Resume, session: AsyncSession):
     try:
         await session.delete(resume)
         await session.commit()

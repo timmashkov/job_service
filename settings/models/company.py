@@ -7,7 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 
 class Company(Base):
-    __tablename__ = 'company'
+    __tablename__ = "company"
 
     name: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
     description: Mapped[str] = mapped_column(Text, nullable=False)
