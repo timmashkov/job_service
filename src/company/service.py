@@ -1,4 +1,4 @@
-from sqlalchemy import select, Result, insert
+from sqlalchemy import select, Result, insert, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from settings.models import Company
@@ -45,6 +45,37 @@ async def insert_company(company: CompanyIn, session: AsyncSession):
                 Company.ticker,
             )
         )
+        result = await session.execute(stmt)
+        answer = result.first()
+        if answer:
+            await session.commit()
+            return answer._asdict()
+        else:
+            await session.rollback()
+        return {"answer": "Cannot add new data"}
+    except Exception as e:
+        await session.rollback()
+        return {"answer": f"Error {e} is caught"}
+
+
+async def update_company(company: CompanyIn, session: AsyncSession, name: str):
+    try:
+        stmt = (update(Company).where(Company.name == name)
+                .values(
+                name=company.name,
+                description=company.description,
+                address=company.address,
+                people=company.people,
+                hunt_count=company.hunt_count,
+                ticker=company.ticker,
+                ).returning(
+                Company.name,
+                Company.description,
+                Company.address,
+                Company.people,
+                Company.hunt_count,
+                Company.ticker,
+            ))
         result = await session.execute(stmt)
         answer = result.first()
         if answer:
