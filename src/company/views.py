@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from settings.database import tempest
 from src.company.schemas import CompanyIn
-from src.company.service import get_companies, find_company, insert_company, update_company
+from src.company.service import get_companies, find_company, insert_company, update_company, delete_company
 
 router = APIRouter(prefix="/company")
 
@@ -33,3 +33,9 @@ async def change_company(company_name: str,
     return await update_company(company=company,
                                 session=session,
                                 name=company_name)
+
+
+@router.delete("/del_company")
+async def del_company(corp_name: str,
+                      session: AsyncSession = Depends(tempest.async_scoped_session)):
+    return await delete_company(name=corp_name, session=session)

@@ -1,4 +1,4 @@
-from sqlalchemy import select, Result, insert, update
+from sqlalchemy import select, Result, insert, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from settings.models import Company
@@ -83,6 +83,28 @@ async def update_company(company: CompanyIn, session: AsyncSession, name: str):
             return answer._asdict()
         else:
             await session.rollback()
+        return {"answer": "Cannot add new data"}
+    except Exception as e:
+        await session.rollback()
+        return {"answer": f"Error {e} is caught"}
+
+
+async def delete_company(name: str, session: AsyncSession):
+    try:
+        stmt = (delete(Company)
+                .where(Company.name == name)
+                .returning(
+                Company.name,
+                Company.description,
+                Company.address,
+                Company.people,
+                Company.hunt_count,
+                Company.ticker))
+        result = await session.execute(stmt)
+        answer = result.first()
+        if answer:
+            await session.commit()
+            return answer._asdict()
         return {"answer": "Cannot add new data"}
     except Exception as e:
         await session.rollback()
