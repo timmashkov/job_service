@@ -1,5 +1,5 @@
 *idea/
 **/__pycache__/
 *.env
-*jwе-private.pem
+*jwt-private.pem
 *jwt-public.pem
